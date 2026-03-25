@@ -6,6 +6,7 @@ type Props = {
   category: string;
   href: string;
   previewImage: string;
+  mobilePreviewImage?: string;
   description: string;
   delay?: number;
 };
@@ -15,6 +16,7 @@ export function ProjectPerspectiveCard({
   category,
   href,
   previewImage,
+  mobilePreviewImage,
   description,
   delay = 0,
 }: Props) {
@@ -32,7 +34,22 @@ export function ProjectPerspectiveCard({
       <div
         className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all duration-500 ease-out md:[transform:perspective(1200px)_rotateX(10deg)_rotateY(-14deg)_rotateZ(3deg)] md:group-hover:[transform:perspective(1200px)_rotateX(5deg)_rotateY(-7deg)_rotateZ(1deg)] shadow-[20px_20px_60px_-10px_rgba(0,0,0,0.5),-20px_-20px_60px_rgba(255,255,255,0.05)] md:group-hover:shadow-[10px_12px_36px_-8px_rgba(0,0,0,0.4),-8px_-8px_26px_rgba(255,255,255,0.04)]"
       >
-        <div className="relative overflow-hidden rounded-2xl">
+        <div className="relative overflow-hidden rounded-2xl md:hidden">
+          <div className="mx-auto w-[210px] rounded-[1.8rem] border border-white/15 bg-[#0b1220] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
+            <div className="mb-1.5 mx-auto h-1.5 w-14 rounded-full bg-white/20" />
+            <div className="relative overflow-hidden rounded-[1.2rem] border border-white/10">
+              <img
+                src={mobilePreviewImage ?? previewImage}
+                alt={`Apercu mobile du projet ${title}`}
+                className="h-[340px] w-full object-cover object-top"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d1322]/78 via-transparent to-transparent" />
+            </div>
+          </div>
+        </div>
+
+        <div className="relative hidden overflow-hidden rounded-2xl md:block">
           <img
             src={previewImage}
             alt={`Apercu du projet ${title}`}
@@ -42,13 +59,13 @@ export function ProjectPerspectiveCard({
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d1322]/80 via-[#0d1322]/25 to-transparent" />
         </div>
 
-        <div className="absolute inset-x-6 bottom-5">
+        <div className="mt-4 px-2 md:absolute md:inset-x-6 md:bottom-5 md:mt-0 md:px-0">
           <p className="text-xs font-semibold uppercase tracking-wider text-brand-300/95">{category}</p>
           <h3 className="mt-1 text-lg font-semibold text-white">{title}</h3>
           <p className="mt-1 line-clamp-2 text-sm text-white/75">{description}</p>
         </div>
 
-        <div className="absolute bottom-5 right-5 translate-y-1 scale-95 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100">
+        <div className="absolute bottom-5 right-5 hidden translate-y-1 scale-95 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 md:block">
           <span className="inline-flex items-center gap-1 rounded-xl border border-white/20 bg-[#0f172a]/80 px-3 py-1.5 text-xs font-semibold text-white">
             Visiter le site <ArrowRight className="h-3.5 w-3.5" />
           </span>

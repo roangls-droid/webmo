@@ -11,7 +11,9 @@ import { ContactForm } from "./components/ContactForm";
 import { ServiceCard } from "./components/ServiceCard";
 import { CONTACT_LINKS } from "./constants/contact";
 import ailienShot from "./assets/portfolio/ailien.jpg";
+import ailienMobileShot from "./assets/portfolio/ailien-mobile.jpg";
 import remidentalShot from "./assets/portfolio/remidental.jpg";
+import remidentalMobileShot from "./assets/portfolio/remidental-mobile.jpg";
 
 function scrollToId(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -178,6 +180,7 @@ export default function App() {
         category: t.portfolio.p1cat,
         href: "https://www.remidental.com/",
         previewImage: remidentalShot,
+        mobilePreviewImage: remidentalMobileShot,
         description: t.portfolio.p1desc,
       },
       {
@@ -185,6 +188,7 @@ export default function App() {
         category: t.portfolio.p2cat,
         href: "https://ailien-site.vercel.app/",
         previewImage: ailienShot,
+        mobilePreviewImage: ailienMobileShot,
         description: t.portfolio.p2desc,
       },
     ],
@@ -417,6 +421,7 @@ export default function App() {
                       category={project.category}
                       href={project.href}
                       previewImage={project.previewImage}
+                      mobilePreviewImage={project.mobilePreviewImage}
                       description={project.description}
                       delay={index * 0.08}
                     />
