@@ -34,9 +34,20 @@ export function ProjectPerspectiveCard({
       <div
         className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-all duration-500 ease-out md:[transform:perspective(1200px)_rotateX(10deg)_rotateY(-14deg)_rotateZ(3deg)] md:group-hover:[transform:perspective(1200px)_rotateX(5deg)_rotateY(-7deg)_rotateZ(1deg)] shadow-[20px_20px_60px_-10px_rgba(0,0,0,0.5),-20px_-20px_60px_rgba(255,255,255,0.05)] md:group-hover:shadow-[10px_12px_36px_-8px_rgba(0,0,0,0.4),-8px_-8px_26px_rgba(255,255,255,0.04)]"
       >
-        <div className="relative overflow-hidden rounded-2xl md:hidden">
+        <motion.div
+          className="relative overflow-hidden rounded-2xl md:hidden"
+          initial={{ opacity: 0.5, scale: 0.95, rotateX: -12, y: 20 }}
+          whileInView={{ opacity: 1, scale: 1, rotateX: 0, y: 0 }}
+          viewport={{ once: false, amount: 0.55 }}
+          transition={{ type: "spring", stiffness: 50, damping: 20, delay }}
+          whileTap={{
+            scale: 0.98,
+            boxShadow:
+              "0 22px 54px rgba(0,0,0,0.52), -8px -8px 24px rgba(255,255,255,0.06)",
+          }}
+          style={{ transformPerspective: 1200 }}
+        >
           <div className="mx-auto w-[210px] rounded-[1.8rem] border border-white/15 bg-[#0b1220] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
-            <div className="mb-1.5 mx-auto h-1.5 w-14 rounded-full bg-white/20" />
             <div className="relative overflow-hidden rounded-[1.2rem] border border-white/10">
               <img
                 src={mobilePreviewImage ?? previewImage}
@@ -47,7 +58,7 @@ export function ProjectPerspectiveCard({
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d1322]/78 via-transparent to-transparent" />
             </div>
           </div>
-        </div>
+        </motion.div>
 
         <div className="relative hidden overflow-hidden rounded-2xl md:block">
           <img
