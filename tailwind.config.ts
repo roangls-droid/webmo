@@ -16,10 +16,10 @@ export default {
           200: "#d0d8e5"
         },
         brand: {
-          300: "#86efac",
-          400: "#4ade80",
-          500: "#22c55e",
-          600: "#16a34a"
+          300: "#a5b4fc",
+          400: "#818cf8",
+          500: "#6366f1",
+          600: "#4f46e5"
         },
         accent: {
           300: "#fcd34d",
@@ -28,11 +28,11 @@ export default {
         },
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(34, 197, 94, 0.22), 0 18px 60px rgba(34, 197, 94, 0.16)",
+        glow: "0 0 0 1px rgba(99, 102, 241, 0.28), 0 18px 60px rgba(99, 102, 241, 0.2)",
       },
       backgroundImage: {
         "grid-fade":
-          "radial-gradient(650px circle at var(--x, 50%) var(--y, 10%), rgba(34,197,94,0.14), transparent 62%), radial-gradient(900px circle at 50% 0%, rgba(251,191,36,0.08), transparent 58%)",
+          "radial-gradient(650px circle at var(--x, 50%) var(--y, 10%), rgba(129,140,248,0.18), transparent 62%), radial-gradient(900px circle at 50% 0%, rgba(196,181,253,0.12), transparent 58%)",
       },
     },
   },

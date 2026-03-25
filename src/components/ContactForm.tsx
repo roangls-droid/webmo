@@ -137,7 +137,7 @@ export function ContactForm({ lang = "fr" }: { lang?: Lang }) {
       </p>
 
       {status === "success" ? (
-        <p className="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+        <p className="mt-4 rounded-xl border border-brand-500/30 bg-brand-500/10 px-4 py-3 text-sm text-brand-300">
           {t.success}
         </p>
       ) : null}

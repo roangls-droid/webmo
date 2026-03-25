@@ -267,7 +267,7 @@ export default function App() {
             <div className="mx-auto flex max-w-6xl flex-col items-center">
               <MotionInView className="relative flex w-full max-w-3xl flex-col items-center text-center">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.06] px-3 py-1 text-xs font-semibold text-white/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand-500 shadow-[0_0_12px_rgba(34,197,94,0.55)]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-500 shadow-[0_0_12px_rgba(129,140,248,0.55)]" />
                   {t.hero.badge}
                 </div>
 
@@ -290,7 +290,7 @@ export default function App() {
 
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-white/55">
                   <div className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-400/80" />
                     {t.hero.chip1} <span className="text-white/25">·</span> {t.hero.chip2}
                   </div>
                   <div className="flex items-center gap-2">
