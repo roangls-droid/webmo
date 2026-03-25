@@ -1,12 +1,12 @@
-import type { ButtonHTMLAttributes } from "react";
+import type { ComponentProps } from "react";
 import { motion } from "framer-motion";
 import { cn } from "../utils/cn";
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
+const MotionButton = motion.button;
+type Props = Omit<ComponentProps<typeof MotionButton>, "className"> & {
+  className?: string;
   variant?: "primary" | "ghost";
 };
-
-const MotionButton = motion.button;
 
 export function Button({ className, variant = "primary", disabled, ...props }: Props) {
   return (
