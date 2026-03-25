@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#121a2c"/>
+  <path
+    d="M7 9.5h3.2L12.5 18l2.3-8.5h2.4l2.3 8.5L21.8 9.5H25l-3.8 13h-2.9l-2.1-7.6-2.1 7.6h-2.9L7 9.5z"
+    fill="url(#webmo-favicon-grad)"
+  />
+  <defs>
+    <linearGradient id="webmo-favicon-grad" x1="7" y1="9" x2="25" y2="23" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c4b5fd"/>
+      <stop offset="0.5" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+</svg>

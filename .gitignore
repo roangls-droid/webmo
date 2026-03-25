@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Logs & local
+*.log
+.DS_Store
+.env
+.env.local
+.env.*.local
+
+# Editor
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Playwright (optional local browser cache)
+playwright-report/
+test-results/

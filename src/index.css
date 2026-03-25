@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink-900 text-white antialiased;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+@layer components {
+  .glass {
+    @apply border border-white/[0.12] bg-white/[0.06] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_8px_32px_rgba(0,0,0,0.25)] backdrop-blur-xl;
+  }
+
+  .glass-hover {
+    @apply transition-[background-color,box-shadow,transform,border-color] duration-300 hover:border-white/[0.18] hover:bg-white/[0.09] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1),0_12px_40px_rgba(34,197,94,0.12)];
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(
+      105deg,
+      #ffffff 0%,
+      #bbf7d0 42%,
+      #fde68a 88%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-soft {
+    background-image: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      #86efac 50%,
+      #fcd34d 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
