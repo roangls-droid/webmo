@@ -41,7 +41,7 @@ const COPY = {
       f2Title: "Preuve sociale",
       f2Desc: "Mettez en valeur votre excellente réputation (4,9+ ⭐)",
       f3Title: "Conversion",
-      f3Desc: "CTA clairs et parcours rassurant",
+      f3Desc: "Boutons d'action clairs et parcours rassurant",
     },
     services: {
       eyebrow: "Services",
