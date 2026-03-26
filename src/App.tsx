@@ -25,7 +25,7 @@ const COPY = {
   fr: {
     nav: { services: "Services", portfolio: "Portfolio", approach: "Mon approche", contact: "Contact", talk: "Discutons" },
     hero: {
-      badge: "Design Premium · Visibilité · Acquisition",
+      badge: "Design Premium · Visibilité · Référencement",
       titleA: "Votre expertise ",
       titleB: "mérite un site à sa hauteur",
       subtitle:
@@ -292,16 +292,6 @@ export default function App() {
                   </Button>
                 </div>
 
-                <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-white/55">
-                  <div className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-400/80" />
-                    {t.hero.chip1} <span className="text-white/25">·</span> {t.hero.chip2}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-amber-300/80" />
-                    {t.hero.chip3} <span className="text-white/25">·</span> {t.hero.chip4}
-                  </div>
-                </div>
               </MotionInView>
 
               <MotionInView className="mt-8 w-full max-w-6xl" delay={0.04}>
