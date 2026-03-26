@@ -76,7 +76,7 @@ const COPY = {
       i1: "Audit rapide + recommandations actionnables",
       i2: "Refonte UI moderne",
       i3: "Performance & structure SEO-friendly",
-      i4: "Livraison responsive, prête à publier",
+      i4: "Format mobile & ordinateur, mise en ligne incluse",
       priceTitle: "Tarif libre",
       priceDesc:
         "Vous payez en fonction de la valeur perçue, de votre budget et du résultat obtenu. Idéal si vous souhaitez moderniser maintenant, sans engagement lourd.",
