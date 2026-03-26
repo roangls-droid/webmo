@@ -1,4 +1,4 @@
-export const EMAIL = "roangilson@gmail.com";
+export const EMAIL = "webmo.belgique@gmail.com";
 export const PHONE_DISPLAY = "+32 492 96 87 45";
 export const PHONE_HREF = "tel:+32492968745";
 
