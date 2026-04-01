@@ -79,11 +79,6 @@ const COPY = {
       i4: "Format mobile & ordinateur, mise en ligne incluse",
       priceEyebrow: "Collaboration",
       priceTitle: "Devis personnalisé",
-      pricePoints: [
-        "Échange initial pour cadrer objectifs et contraintes",
-        "Proposition écrite : périmètre, planning et enveloppe",
-        "Acompte au lancement, solde selon les jalons convenus",
-      ],
       priceDesc:
         "Pas de grille figée : le chiffrage reflète votre besoin réel (refonte, SEO, campagnes). Vous savez ce que vous payez, ce qui est inclus, et quand c’est livré.",
       propose: "Demander un devis",
@@ -158,11 +153,6 @@ const COPY = {
       i4: "Responsive delivery, ready to publish",
       priceEyebrow: "How we work",
       priceTitle: "Custom quote",
-      pricePoints: [
-        "Discovery call to align goals and constraints",
-        "Written proposal: scope, timeline, and budget",
-        "Deposit at kickoff, balance tied to agreed milestones",
-      ],
       priceDesc:
         "No one-size-fits-all pricing: the quote reflects your actual needs (redesign, SEO, campaigns). You know what you pay, what’s included, and when it ships.",
       propose: "Request a quote",
@@ -479,15 +469,7 @@ export default function App() {
                     {t.approach.priceEyebrow}
                   </p>
                   <h3 className="mt-2 text-base font-semibold text-white">{t.approach.priceTitle}</h3>
-                  <ul className="mt-4 space-y-2.5">
-                    {t.approach.pricePoints.map((line) => (
-                      <li key={line} className="flex gap-2.5 text-sm leading-snug text-white/75">
-                        <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" aria-hidden />
-                        <span>{line}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-4 border-t border-white/[0.08] pt-4 text-sm leading-6 text-white/65">
+                  <p className="mt-3 text-sm leading-6 text-white/70">
                     {t.approach.priceDesc}
                   </p>
                   <div className="mt-6">
