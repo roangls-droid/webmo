@@ -47,7 +47,7 @@ const COPY = {
       eyebrow: "Services",
       title: "Une modernisation complète, orientée conversion",
       subtitle:
-        "Design, acquisition et visibilité locale. Le tout avec une exécution rapide et une qualité “produit”.",
+        "Un design moderne, une visibilité Google optimisée et une livraison rapide pour booster vos résultats dès maintenant.",
       s1t: "Refonte de Site Web",
       s1d: "Modernisation visuelle, typographie premium et expérience mobile fluide.",
       s2t: "Campagnes SEO",
