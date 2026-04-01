@@ -69,19 +69,25 @@ const COPY = {
     },
     approach: {
       eyebrow: "Mon approche",
-      title: "Un modèle flexible pour mes premières références",
+      title: "Une offre sur mesure, alignée sur vos objectifs",
       subtitle:
-        "Je propose un tarif libre/flexible sur une sélection de projets pour construire des cas concrets, avec un résultat pro et mesurable.",
+        "Chaque collaboration repose sur un cadre rigoureux : objectifs, calendrier et budget sont définis avec précision avant de commencer.",
       got: "Ce que vous obtenez",
       i1: "Audit rapide + recommandations actionnables",
       i2: "Refonte UI moderne",
       i3: "Performance & structure SEO-friendly",
       i4: "Format mobile & ordinateur, mise en ligne incluse",
-      priceTitle: "Tarif libre",
+      priceEyebrow: "Collaboration",
+      priceTitle: "Devis personnalisé",
+      pricePoints: [
+        "Échange initial pour cadrer objectifs et contraintes",
+        "Proposition écrite : périmètre, planning et enveloppe",
+        "Acompte au lancement, solde selon les jalons convenus",
+      ],
       priceDesc:
-        "Vous payez en fonction de la valeur perçue, de votre budget et du résultat obtenu. Idéal si vous souhaitez moderniser maintenant, sans engagement lourd.",
-      propose: "Proposer un projet",
-      limited: "Je prends un nombre limité de projets par mois.",
+        "Pas de grille figée : le chiffrage reflète votre besoin réel (refonte, SEO, campagnes). Vous savez ce que vous payez, ce qui est inclus, et quand c’est livré.",
+      propose: "Demander un devis",
+      limited: "Je limite volontairement le volume de missions pour garder une exécution irréprochable.",
     },
     contact: {
       eyebrow: "Contact",
@@ -120,7 +126,7 @@ const COPY = {
       eyebrow: "Services",
       title: "Complete modernization focused on conversion",
       subtitle:
-        "Design, acquisition, and local visibility. Delivered fast with product-level quality.",
+        "Modern design, optimized Google visibility, and fast delivery to boost your results starting now.",
       s1t: "Website Redesign",
       s1d: "Visual modernization, premium typography, and smooth mobile experience.",
       s2t: "SEO Campaigns",
@@ -142,19 +148,25 @@ const COPY = {
     },
     approach: {
       eyebrow: "My approach",
-      title: "A flexible model for my first references",
+      title: "A tailored offer built around your goals",
       subtitle:
-        "I offer flexible/free pricing on selected projects to build concrete case studies with measurable professional outcomes.",
+        "Every engagement starts with a brief and a clear scope: deliverables, milestones, and budget are agreed before work begins — the same rigor as the live projects in my portfolio.",
       got: "What you get",
       i1: "Quick audit + actionable recommendations",
       i2: "Modern UI redesign",
       i3: "Performance & SEO-friendly structure",
       i4: "Responsive delivery, ready to publish",
-      priceTitle: "Flexible pricing",
+      priceEyebrow: "How we work",
+      priceTitle: "Custom quote",
+      pricePoints: [
+        "Discovery call to align goals and constraints",
+        "Written proposal: scope, timeline, and budget",
+        "Deposit at kickoff, balance tied to agreed milestones",
+      ],
       priceDesc:
-        "You pay based on perceived value, your budget, and results achieved. Ideal if you want to modernize now without heavy commitment.",
-      propose: "Propose a project",
-      limited: "I take a limited number of projects each month.",
+        "No one-size-fits-all pricing: the quote reflects your actual needs (redesign, SEO, campaigns). You know what you pay, what’s included, and when it ships.",
+      propose: "Request a quote",
+      limited: "I intentionally limit workload to keep execution standards high.",
     },
     contact: {
       eyebrow: "Contact",
@@ -463,8 +475,19 @@ export default function App() {
 
               <MotionInView delay={0.07}>
                 <div className="rounded-3xl border border-brand-500/25 bg-gradient-to-b from-brand-500/20 to-white/[0.05] p-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.12)] backdrop-blur-xl sm:p-8">
-                  <h3 className="text-base font-semibold text-white">{t.approach.priceTitle}</h3>
-                  <p className="mt-3 text-sm leading-6 text-white/70">
+                  <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-brand-300/90">
+                    {t.approach.priceEyebrow}
+                  </p>
+                  <h3 className="mt-2 text-base font-semibold text-white">{t.approach.priceTitle}</h3>
+                  <ul className="mt-4 space-y-2.5">
+                    {t.approach.pricePoints.map((line) => (
+                      <li key={line} className="flex gap-2.5 text-sm leading-snug text-white/75">
+                        <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-brand-400" aria-hidden />
+                        <span>{line}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-4 border-t border-white/[0.08] pt-4 text-sm leading-6 text-white/65">
                     {t.approach.priceDesc}
                   </p>
                   <div className="mt-6">
