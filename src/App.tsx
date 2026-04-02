@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import { ArrowRight, BadgeCheck, Bot, LayoutGrid, Megaphone, Search } from "lucide-react";
 import { Button } from "./components/Button";
 import { Container } from "./components/Container";
@@ -14,6 +14,28 @@ import ailienShot from "./assets/portfolio/ailien.jpg";
 import ailienMobileShot from "./assets/portfolio/ailien-mobile.jpg";
 import remidentalShot from "./assets/portfolio/remidental.jpg";
 import remidentalMobileShot from "./assets/portfolio/remidental-mobile.jpg";
+
+/** Défaut : fond WebGL. `?bg=mesh` · `?bg=r3f` · `?bg=three` */
+function backdropModeFromSearch(): "mesh" | "r3f" | "three" | "webgl" {
+  const q = new URLSearchParams(window.location.search).get("bg");
+  if (q === "mesh") return "mesh";
+  if (q === "three") return "three";
+  if (q === "r3f") return "r3f";
+  return "webgl";
+}
+
+const PaperMeshGradientBackdropLazy = lazy(() =>
+  import("@/components/ui/background-paper-shaders").then((m) => ({ default: m.PaperMeshGradientBackdrop })),
+);
+const PaperR3FBackdropLazy = lazy(() =>
+  import("@/components/ui/background-paper-shaders").then((m) => ({ default: m.PaperR3FBackdrop })),
+);
+const ShaderAnimationLazy = lazy(() =>
+  import("@/components/ui/shader-animation").then((m) => ({ default: m.ShaderAnimation })),
+);
+const WebGLShaderBackdropLazy = lazy(() =>
+  import("@/components/ui/web-gl-shader").then((m) => ({ default: m.WebGLShaderBackdrop })),
+);
 
 function scrollToId(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -174,6 +196,7 @@ const COPY = {
 
 export default function App() {
   const [lang, setLang] = useState<Lang>("fr");
+  const backdropMode = useMemo(() => backdropModeFromSearch(), []);
   const t = COPY[lang];
   const projects = useMemo(
     () => [
@@ -198,7 +221,30 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-dvh bg-grid-fade">
+    <div className="relative min-h-dvh bg-grid-fade">
+      <div
+        className={
+          backdropMode === "mesh"
+            ? "pointer-events-none fixed inset-0 z-0 opacity-[0.55]"
+            : "pointer-events-none fixed inset-0 z-0 opacity-[0.42]"
+        }
+      >
+        <Suspense fallback={null}>
+          {backdropMode === "mesh" && (
+            <PaperMeshGradientBackdropLazy className="min-h-dvh bg-transparent [&_canvas]:block" />
+          )}
+          {backdropMode === "r3f" && (
+            <PaperR3FBackdropLazy className="min-h-dvh bg-transparent [&_canvas]:block" />
+          )}
+          {backdropMode === "three" && (
+            <ShaderAnimationLazy className="min-h-dvh bg-transparent [&_canvas]:block" />
+          )}
+          {backdropMode === "webgl" && (
+            <WebGLShaderBackdropLazy className="min-h-dvh bg-transparent [&_canvas]:block" />
+          )}
+        </Suspense>
+      </div>
+      <div className="relative z-10">
       <header className="sticky top-0 z-50 border-b border-white/[0.08] glass">
         <Container>
           <div className="flex h-14 items-center justify-between">
@@ -561,6 +607,7 @@ export default function App() {
           </div>
         </Container>
       </footer>
+      </div>
     </div>
   );
 }
