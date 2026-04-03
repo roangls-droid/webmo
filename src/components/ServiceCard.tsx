@@ -13,7 +13,7 @@ export function ServiceCard({ icon: Icon, title, description }: Props) {
     <motion.div
       whileHover={{ y: -4 }}
       transition={{ type: "spring", stiffness: 320, damping: 22 }}
-      className="group relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl bg-white/5 p-5 ring-1 ring-white/10 hover:bg-white/7 hover:ring-white/15"
+      className="group relative flex h-full min-h-0 flex-col overflow-hidden rounded-2xl bg-ink-800/92 p-5 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] backdrop-blur-md ring-1 ring-white/12 hover:bg-ink-800/97 hover:ring-white/18"
     >
       <div className="absolute inset-0 opacity-0 transition group-hover:opacity-100">
         <div className="absolute -left-24 -top-24 h-56 w-56 rounded-full bg-brand-500/15 blur-3xl" />
