@@ -22,9 +22,6 @@ const COPY = {
     send: "Envoyer",
     sending: "Envoi…",
     direct: "Ou écrivez-moi directement",
-    firstSend:
-      "Premier envoi : FormSubmit peut vous demander de confirmer l’adresse",
-    firstSendSuffix: "par e-mail avant de relayer les messages.",
     subjectPrefix: "Contact Webmo",
   },
   en: {
@@ -41,9 +38,6 @@ const COPY = {
     send: "Send",
     sending: "Sending…",
     direct: "Or write to me directly",
-    firstSend:
-      "First submission: FormSubmit may ask you to confirm the address",
-    firstSendSuffix: "by email before forwarding messages.",
     subjectPrefix: "Webmo contact",
   },
 } as const;
@@ -163,11 +157,6 @@ export function ContactForm({ lang = "fr" }: { lang?: Lang }) {
           </a>
         </p>
       </div>
-
-      <p className="mt-4 text-xs leading-relaxed text-white/45">
-        {t.firstSend}{" "}
-        <span className="text-white/55">{EMAIL}</span> {t.firstSendSuffix}
-      </p>
     </form>
   );
 }
