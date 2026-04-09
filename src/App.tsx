@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { lazy, Suspense, useMemo, useState } from "react";
-import { ArrowRight, BadgeCheck, Bot, LayoutGrid, Megaphone, Search } from "lucide-react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { ArrowRight, BadgeCheck, Bot, LayoutGrid, Megaphone, Menu, Search, X } from "lucide-react";
 import { Button } from "./components/Button";
 import { Container } from "./components/Container";
 import { GoogleGMark, GoogleStyleStars } from "./components/GoogleTrust";
@@ -196,8 +196,33 @@ const COPY = {
 
 export default function App() {
   const [lang, setLang] = useState<Lang>("fr");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const backdropMode = useMemo(() => backdropModeFromSearch(), []);
   const t = COPY[lang];
+
+  useEffect(() => {
+    if (!mobileNavOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileNavOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [mobileNavOpen]);
+
+  const closeMobileNav = () => setMobileNavOpen(false);
+  const menuToggleLabel =
+    lang === "fr"
+      ? mobileNavOpen
+        ? "Fermer le menu"
+        : "Ouvrir le menu"
+      : mobileNavOpen
+        ? "Close menu"
+        : "Open menu";
   const projects = useMemo(
     () => [
       {
@@ -246,14 +271,24 @@ export default function App() {
       </div>
       <div className="relative z-10">
       <header className="sticky top-0 z-50 border-b border-white/[0.08] glass">
-        <Container>
-          <div className="flex h-14 items-center justify-between">
+        {mobileNavOpen ? (
+          <button
+            type="button"
+            tabIndex={-1}
+            aria-label={lang === "fr" ? "Fermer le menu" : "Close menu"}
+            className="fixed inset-0 z-40 bg-black/55 md:hidden"
+            onClick={closeMobileNav}
+          />
+        ) : null}
+        <Container className="relative z-50">
+          <div className="flex h-14 items-center justify-between gap-3">
             <a
               href="#"
-              className="flex items-center gap-2 rounded-lg px-1 py-0.5 transition-colors hover:text-white"
+              onClick={closeMobileNav}
+              className="flex min-w-0 items-center gap-2 rounded-lg px-1 py-0.5 transition-colors hover:text-white"
             >
-              <span className="h-2.5 w-2.5 rounded-full bg-brand-500 shadow-glow" />
-              <span className="text-sm font-semibold tracking-tight text-white/95">
+              <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-brand-500 shadow-glow" />
+              <span className="truncate text-sm font-semibold tracking-tight text-white/95">
                 Webmo — Modernisation Web
               </span>
             </a>
@@ -295,12 +330,14 @@ export default function App() {
               </motion.button>
               <div className="rounded-xl border border-white/10 bg-white/5 p-1 text-xs">
                 <button
+                  type="button"
                   onClick={() => setLang("fr")}
                   className={`rounded-md px-2 py-1 font-semibold ${lang === "fr" ? "bg-white/15 text-white" : "text-white/65 hover:text-white"}`}
                 >
                   FR
                 </button>
                 <button
+                  type="button"
                   onClick={() => setLang("en")}
                   className={`rounded-md px-2 py-1 font-semibold ${lang === "en" ? "bg-white/15 text-white" : "text-white/65 hover:text-white"}`}
                 >
@@ -308,7 +345,88 @@ export default function App() {
                 </button>
               </div>
             </nav>
+
+            <button
+              type="button"
+              className="-m-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-white/85 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/45 md:hidden"
+              aria-expanded={mobileNavOpen}
+              aria-controls="mobile-nav"
+              aria-label={menuToggleLabel}
+              onClick={() => setMobileNavOpen((o) => !o)}
+            >
+              {mobileNavOpen ? <X className="h-6 w-6" strokeWidth={2} aria-hidden /> : <Menu className="h-6 w-6" strokeWidth={2} aria-hidden />}
+            </button>
           </div>
+
+          <nav
+            id="mobile-nav"
+            className={`border-t border-white/[0.1] md:hidden ${mobileNavOpen ? "block" : "hidden"}`}
+            aria-hidden={!mobileNavOpen}
+          >
+            <div className="flex flex-col gap-1 py-4 text-sm">
+              <a
+                className="rounded-lg px-3 py-2.5 font-medium text-white/80 transition-colors hover:bg-white/[0.06] hover:text-white"
+                href="#services"
+                onClick={closeMobileNav}
+              >
+                {t.nav.services}
+              </a>
+              <a
+                className="rounded-lg px-3 py-2.5 font-medium text-white/80 transition-colors hover:bg-white/[0.06] hover:text-white"
+                href="#portfolio"
+                onClick={closeMobileNav}
+              >
+                {t.nav.portfolio}
+              </a>
+              <a
+                className="rounded-lg px-3 py-2.5 font-medium text-white/80 transition-colors hover:bg-white/[0.06] hover:text-white"
+                href="#approche"
+                onClick={closeMobileNav}
+              >
+                {t.nav.approach}
+              </a>
+              <a
+                className="rounded-lg px-3 py-2.5 font-medium text-white/80 transition-colors hover:bg-white/[0.06] hover:text-white"
+                href="#contact"
+                onClick={closeMobileNav}
+              >
+                {t.nav.contact}
+              </a>
+              <motion.button
+                type="button"
+                onClick={() => {
+                  scrollToId("contact");
+                  closeMobileNav();
+                }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 450, damping: 22 }}
+                className="mt-1 rounded-xl border border-white/[0.14] bg-white/[0.1] px-3 py-2.5 text-left text-sm font-semibold text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]"
+              >
+                {t.nav.talk}
+              </motion.button>
+              <div className="mt-3 flex items-center gap-2 border-t border-white/[0.08] pt-4">
+                <span className="px-1 text-xs font-medium uppercase tracking-wide text-white/45">
+                  {lang === "fr" ? "Langue" : "Language"}
+                </span>
+                <div className="flex rounded-xl border border-white/10 bg-white/5 p-1 text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setLang("fr")}
+                    className={`rounded-md px-3 py-1.5 font-semibold ${lang === "fr" ? "bg-white/15 text-white" : "text-white/65 hover:text-white"}`}
+                  >
+                    FR
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setLang("en")}
+                    className={`rounded-md px-3 py-1.5 font-semibold ${lang === "en" ? "bg-white/15 text-white" : "text-white/65 hover:text-white"}`}
+                  >
+                    EN
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>
         </Container>
       </header>
 
