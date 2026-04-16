@@ -8,6 +8,7 @@ import { MotionInView } from "./components/MotionInView";
 import { ProjectPerspectiveCard } from "./components/ProjectPerspectiveCard";
 import { SectionHeading } from "./components/SectionHeading";
 import { ContactForm } from "./components/ContactForm";
+import { SeoToolsMarquee } from "./components/SeoToolsMarquee";
 import { ServiceCard } from "./components/ServiceCard";
 import { CONTACT_LINKS } from "./constants/contact";
 import ailienShot from "./assets/portfolio/ailien.jpg";
@@ -47,11 +48,11 @@ const COPY = {
   fr: {
     nav: { services: "Services", portfolio: "Portfolio", approach: "Mon approche", contact: "Contact", talk: "Discutons" },
     hero: {
-      badge: "Design Premium · Visibilité · Référencement",
-      titleA: "Votre expertise ",
-      titleB: "mérite un site à sa hauteur",
+      badge: "SEO · SEA · GEO · Visibilité & conversion",
+      titleA: "À chaque recherche, ",
+      titleB: "soyez en tête du classement",
       subtitle:
-        "Je modernise l’image des professionnels avec des landing pages rapides, élégantes et pensées pour convertir — du mobile au desktop.",
+        "SEO, SEA et GEO : je fais remonter votre activité sur Google, dans les annonces et dans les réponses des assistants IA — avec un site clair, crédible et pensé pour convertir.",
       ctaPortfolio: "Voir mon portfolio",
       ctaServices: "Découvrir les services",
       chip1: "Clair",
@@ -78,6 +79,7 @@ const COPY = {
       s3d: "Stratégies ciblées pour générer des leads rapidement, avec un budget maîtrisé.",
       s4t: "Optimisation IA (GEO)",
       s4d: "Préparer votre site à être cité par Perplexity, ChatGPT ou Gemini.",
+      toolsMarquee: "Outils SEO & SEA",
     },
     portfolio: {
       eyebrow: "Portfolio",
@@ -121,11 +123,11 @@ const COPY = {
   en: {
     nav: { services: "Services", portfolio: "Portfolio", approach: "My approach", contact: "Contact", talk: "Let's talk" },
     hero: {
-      badge: "Premium Design · Visibility · Acquisition",
-      titleA: "Your expertise ",
-      titleB: "deserves a website that matches it",
+      badge: "SEO · SEA · GEO · Visibility & conversion",
+      titleA: "On every search that matters, ",
+      titleB: "show up at the top",
       subtitle:
-        "I modernize professionals' brand image with fast, elegant landing pages designed to convert — from mobile to desktop.",
+        "SEO, paid search (SEA), and AI visibility (GEO): I help you rank on Google, win with ads, and get cited by AI assistants—with a clear, trustworthy site built to convert.",
       ctaPortfolio: "View portfolio",
       ctaServices: "Explore services",
       chip1: "Clear",
@@ -152,6 +154,7 @@ const COPY = {
       s3d: "Targeted ad strategies to generate leads quickly with controlled budgets.",
       s4t: "AI Optimization (GEO)",
       s4d: "Prepare your website to be cited by Perplexity, ChatGPT, and Gemini.",
+      toolsMarquee: "SEO & SEA tools",
     },
     portfolio: {
       eyebrow: "Portfolio",
@@ -550,6 +553,17 @@ export default function App() {
                   description={t.services.s4d}
                 />
               </MotionInView>
+            </div>
+
+            <div className="mt-12">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] px-2 py-4 sm:px-3 sm:py-5">
+                <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-brand-300/90">
+                  {t.services.toolsMarquee}
+                </p>
+                <div className="-mx-2 overflow-x-clip overflow-y-visible sm:-mx-3">
+                  <SeoToolsMarquee />
+                </div>
+              </div>
             </div>
           </Container>
         </section>

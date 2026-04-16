@@ -34,6 +34,15 @@ export default {
         "grid-fade":
           "radial-gradient(650px circle at var(--x, 50%) var(--y, 10%), rgba(34,197,94,0.14), transparent 62%), radial-gradient(900px circle at 50% 0%, rgba(251,191,36,0.08), transparent 58%)",
       },
+      keyframes: {
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
+      animation: {
+        marquee: "marquee 52s linear infinite",
+      },
     },
   },
   plugins: [],
