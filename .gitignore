@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Vercel (lien local CLI)
+.vercel/
+
 # Build
 dist/
 *.tsbuildinfo
