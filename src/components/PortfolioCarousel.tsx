@@ -1,4 +1,4 @@
-import { useCallback, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ProjectPerspectiveCard } from "./ProjectPerspectiveCard";
@@ -20,7 +20,18 @@ type Props = {
   lang: Lang;
 };
 
-const PAGE_SIZE = 2;
+/** `md` (768px) : desktop = 2 cartes, mobile = 1 carte lisible. */
+const MD_UP_QUERY = "(min-width: 768px)";
+
+function subscribeMdUp(onChange: () => void) {
+  const mq = window.matchMedia(MD_UP_QUERY);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+
+function getMdUpSnapshot() {
+  return window.matchMedia(MD_UP_QUERY).matches;
+}
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -34,20 +45,27 @@ const slideVariants = {
   }),
 };
 
-function chunkProjects(projects: PortfolioProject[]): PortfolioProject[][] {
+function chunkProjects(projects: PortfolioProject[], pageSize: number): PortfolioProject[][] {
   const pages: PortfolioProject[][] = [];
-  for (let i = 0; i < projects.length; i += PAGE_SIZE) {
-    pages.push(projects.slice(i, i + PAGE_SIZE));
+  const step = Math.max(1, pageSize);
+  for (let i = 0; i < projects.length; i += step) {
+    pages.push(projects.slice(i, i + step));
   }
   return pages;
 }
 
 export function PortfolioCarousel({ projects, visitLabel, lang }: Props) {
   const id = useId();
-  const pages = useMemo(() => chunkProjects(projects), [projects]);
+  const isMdUp = useSyncExternalStore(subscribeMdUp, getMdUpSnapshot, () => false);
+  const pageSize = isMdUp ? 2 : 1;
+  const pages = useMemo(() => chunkProjects(projects, pageSize), [projects, pageSize]);
   const numPages = pages.length;
 
   const [[pageIndex, direction], setSlide] = useState(() => [0, 0]);
+
+  useEffect(() => {
+    setSlide([0, 0]);
+  }, [pageSize]);
 
   const go = useCallback(
     (delta: number) => {
@@ -139,7 +157,15 @@ export function PortfolioCarousel({ projects, visitLabel, lang }: Props) {
           onClick={() => go(-1)}
           className="absolute left-0 top-[38%] z-20 flex h-11 w-11 -translate-x-1 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#0f172a]/90 text-white shadow-lg backdrop-blur-md transition hover:border-white/30 hover:bg-[#0f172a] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 sm:-translate-x-2 md:-translate-x-3"
           aria-controls={`${id}-slide`}
-          aria-label={lang === "fr" ? "Paire de projets précédente" : "Previous project pair"}
+          aria-label={
+            pageSize === 1
+              ? lang === "fr"
+                ? "Projet précédent"
+                : "Previous project"
+              : lang === "fr"
+                ? "Paire de projets précédente"
+                : "Previous project pair"
+          }
         >
           <ChevronLeft className="h-5 w-5" strokeWidth={2} aria-hidden />
         </button>
@@ -148,7 +174,15 @@ export function PortfolioCarousel({ projects, visitLabel, lang }: Props) {
           onClick={() => go(1)}
           className="absolute right-0 top-[38%] z-20 flex h-11 w-11 translate-x-1 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-[#0f172a]/90 text-white shadow-lg backdrop-blur-md transition hover:border-white/30 hover:bg-[#0f172a] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 sm:translate-x-2 md:translate-x-3"
           aria-controls={`${id}-slide`}
-          aria-label={lang === "fr" ? "Paire de projets suivante" : "Next project pair"}
+          aria-label={
+            pageSize === 1
+              ? lang === "fr"
+                ? "Projet suivant"
+                : "Next project"
+              : lang === "fr"
+                ? "Paire de projets suivante"
+                : "Next project pair"
+          }
         >
           <ChevronRight className="h-5 w-5" strokeWidth={2} aria-hidden />
         </button>
@@ -157,7 +191,15 @@ export function PortfolioCarousel({ projects, visitLabel, lang }: Props) {
       <div
         className="mt-8 flex flex-wrap items-center justify-center gap-2"
         role="group"
-        aria-label={lang === "fr" ? "Choisir une paire" : "Choose a pair"}
+        aria-label={
+          pageSize === 1
+            ? lang === "fr"
+              ? "Choisir un projet"
+              : "Choose a project"
+            : lang === "fr"
+              ? "Choisir une paire"
+              : "Choose a pair"
+        }
       >
         {pages.map((page, i) => (
           <button
