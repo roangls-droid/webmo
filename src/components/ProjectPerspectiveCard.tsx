@@ -55,7 +55,7 @@ export function ProjectPerspectiveCard({
               <img
                 src={mobilePreviewImage ?? previewImage}
                 alt={`Apercu mobile du projet ${title}`}
-                className="h-[340px] w-full object-cover object-top"
+                className="h-[380px] w-full object-cover object-top sm:h-[400px]"
                 loading="lazy"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0d1322]/78 via-transparent to-transparent" />
