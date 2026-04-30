@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { lazy, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { ArrowRight, BadgeCheck, Bot, LayoutGrid, Megaphone, Menu, Search, X } from "lucide-react";
 import { Button } from "./components/Button";
 import { Container } from "./components/Container";
 import { GoogleGMark, GoogleStyleStars } from "./components/GoogleTrust";
 import { MotionInView } from "./components/MotionInView";
-import { ProjectPerspectiveCard } from "./components/ProjectPerspectiveCard";
+import { PortfolioCarousel } from "./components/PortfolioCarousel";
 import { SectionHeading } from "./components/SectionHeading";
 import { ContactForm } from "./components/ContactForm";
 import { SeoToolsMarquee } from "./components/SeoToolsMarquee";
@@ -15,6 +15,12 @@ import ailienShot from "./assets/portfolio/ailien.jpg";
 import ailienMobileShot from "./assets/portfolio/ailien-mobile.jpg";
 import remidentalShot from "./assets/portfolio/remidental.jpg";
 import remidentalMobileShot from "./assets/portfolio/remidental-mobile.jpg";
+import smelShot from "./assets/portfolio/smel.jpg";
+import smelMobileShot from "./assets/portfolio/smel-mobile.jpg";
+import jadeShot from "./assets/portfolio/jade.jpg";
+import jadeMobileShot from "./assets/portfolio/jade-mobile.jpg";
+import dadaShot from "./assets/portfolio/dada.jpg";
+import dadaMobileShot from "./assets/portfolio/dada-mobile.jpg";
 
 /** Défaut : fond WebGL. `?bg=mesh` · `?bg=r3f` · `?bg=three` */
 function backdropModeFromSearch(): "mesh" | "r3f" | "three" | "webgl" {
@@ -48,7 +54,6 @@ const COPY = {
   fr: {
     nav: { services: "Services", portfolio: "Portfolio", approach: "Mon approche", contact: "Contact", talk: "Discutons" },
     hero: {
-      badge: "SEO · SEA · GEO · Visibilité & conversion",
       titleA: "À chaque recherche, ",
       titleB: "soyez en tête du classement",
       subtitle:
@@ -84,12 +89,18 @@ const COPY = {
     portfolio: {
       eyebrow: "Portfolio",
       title: "Projets live de modernisation web",
-      subtitle: "Deux références orientées conversion locale, lisibilité mobile et image premium.",
       contactBtn: "Me contacter",
+      visitCta: "Visiter le site",
       p1cat: "Sante / Cabinet dentaire",
       p1desc: "Site orienté conversion locale avec services clairs, preuves sociales et prise de rendez-vous.",
       p2cat: "Bien-etre / Reflexologie",
       p2desc: "Vitrine premium avec navigation simple, sections rassurantes et contact rapide.",
+      p3cat: "Association / Solidarité",
+      p3desc: "Institutionnel événementiel : impact chiffré, dons et agenda des galas à Bruxelles.",
+      p4cat: "E-commerce / Cosmétiques",
+      p4desc: "Boutique luxe capillaire, routines produits et parcours d’achat lisible.",
+      p5cat: "Créatif / Audio",
+      p5desc: "Vitrine studio d’enregistrement : espaces, références et identité visuelle immersive.",
     },
     approach: {
       eyebrow: "Mon approche",
@@ -103,14 +114,13 @@ const COPY = {
       i4: "Format mobile & ordinateur, mise en ligne incluse",
       priceEyebrow: "Collaboration",
       priceTitle: "Devis personnalisé",
-      priceDesc:
-        "Pas de grille figée : le chiffrage reflète votre besoin réel (refonte, SEO, campagnes). Vous savez ce que vous payez, ce qui est inclus, et quand c’est livré.",
+      priceDesc: "Vous savez ce que vous payez, ce qui est inclus, et quand c’est livré.",
       propose: "Demander un devis",
       limited: "Je limite volontairement le volume de missions pour garder une exécution irréprochable.",
     },
     contact: {
       eyebrow: "Contact",
-      title: "Parlons de votre refonte",
+      title: "Parlons de votre modernisation",
       subtitle: "Décrivez votre activité, votre objectif et votre délai. Je réponds vite, avec une proposition claire.",
       coord: "Coordonnées",
       coordText:
@@ -123,7 +133,6 @@ const COPY = {
   en: {
     nav: { services: "Services", portfolio: "Portfolio", approach: "My approach", contact: "Contact", talk: "Let's talk" },
     hero: {
-      badge: "SEO · SEA · GEO · Visibility & conversion",
       titleA: "On every search that matters, ",
       titleB: "show up at the top",
       subtitle:
@@ -159,12 +168,18 @@ const COPY = {
     portfolio: {
       eyebrow: "Portfolio",
       title: "Live website modernization projects",
-      subtitle: "Two references focused on local conversion, mobile readability, and a premium image.",
       contactBtn: "Contact me",
+      visitCta: "Visit site",
       p1cat: "Health / Dental clinic",
       p1desc: "Conversion-focused local website with clear services, social proof, and appointment booking.",
       p2cat: "Wellness / Reflexology",
       p2desc: "Premium showcase website with simple navigation, reassuring sections, and quick contact.",
+      p3cat: "Non-profit / Solidarity",
+      p3desc: "Event-driven institutional site with impact metrics, donations, and Brussels gala calendar.",
+      p4cat: "E-commerce / Beauty",
+      p4desc: "Luxury hair-care store with clear product storytelling and a straightforward checkout path.",
+      p5cat: "Creative / Recording studio",
+      p5desc: "Recording studio showcase with immersive spaces, references, and strong visual identity.",
     },
     approach: {
       eyebrow: "My approach",
@@ -178,14 +193,13 @@ const COPY = {
       i4: "Responsive delivery, ready to publish",
       priceEyebrow: "How we work",
       priceTitle: "Custom quote",
-      priceDesc:
-        "No one-size-fits-all pricing: the quote reflects your actual needs (redesign, SEO, campaigns). You know what you pay, what’s included, and when it ships.",
+      priceDesc: "You know what you pay, what’s included, and when it ships.",
       propose: "Request a quote",
       limited: "I intentionally limit workload to keep execution standards high.",
     },
     contact: {
       eyebrow: "Contact",
-      title: "Let's discuss your redesign",
+      title: "Let's discuss your modernization",
       subtitle: "Describe your business, goals, and timeline. I reply quickly with a clear proposal.",
       coord: "Contact details",
       coordText:
@@ -217,6 +231,37 @@ export default function App() {
     };
   }, [mobileNavOpen]);
 
+  /** Ancien sous-titre / hint encore servi par cache navigateur ou HMR figé — on retire les nœuds feuilles concernés. */
+  useLayoutEffect(() => {
+    const markers = [
+      "Deux projets côte à côte",
+      "pastilles font avancer par paires",
+      "trois vues au total",
+      "Références live : santé, bien-être",
+    ] as const;
+
+    const strip = () => {
+      const section = document.getElementById("portfolio");
+      if (!section) return;
+      for (const el of section.querySelectorAll("*")) {
+        if (el === section || el.children.length > 0) continue;
+        const t = (el.textContent ?? "").replace(/\s+/g, " ").trim();
+        if (t.length > 360) continue;
+        if (markers.some((m) => t.includes(m))) el.remove();
+      }
+    };
+
+    strip();
+    const raf = requestAnimationFrame(strip);
+    const t0 = window.setTimeout(strip, 120);
+    const t1 = window.setTimeout(strip, 600);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.clearTimeout(t0);
+      window.clearTimeout(t1);
+    };
+  }, [lang]);
+
   const closeMobileNav = () => setMobileNavOpen(false);
   const menuToggleLabel =
     lang === "fr"
@@ -235,6 +280,30 @@ export default function App() {
         previewImage: remidentalShot,
         mobilePreviewImage: remidentalMobileShot,
         description: t.portfolio.p1desc,
+      },
+      {
+        title: "SMEL",
+        category: t.portfolio.p3cat,
+        href: "https://smel-psi.vercel.app/",
+        previewImage: smelShot,
+        mobilePreviewImage: smelMobileShot,
+        description: t.portfolio.p3desc,
+      },
+      {
+        title: "Jade Cosmetics",
+        category: t.portfolio.p4cat,
+        href: "https://thejadecosmetics.com/",
+        previewImage: jadeShot,
+        mobilePreviewImage: jadeMobileShot,
+        description: t.portfolio.p4desc,
+      },
+      {
+        title: "Dada Studios",
+        category: t.portfolio.p5cat,
+        href: "https://dada.be/",
+        previewImage: dadaShot,
+        mobilePreviewImage: dadaMobileShot,
+        description: t.portfolio.p5desc,
       },
       {
         title: "Ai Lien",
@@ -439,12 +508,7 @@ export default function App() {
           <Container>
             <div className="mx-auto flex max-w-6xl flex-col items-center">
               <MotionInView className="relative flex w-full max-w-3xl flex-col items-center text-center">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.06] px-3 py-1 text-xs font-semibold text-white/80 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] backdrop-blur-xl">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand-500 shadow-[0_0_12px_rgba(129,140,248,0.55)]" />
-                  {t.hero.badge}
-                </div>
-
-                <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
+                <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl">
                   <span className="text-white">{t.hero.titleA}</span>
                   <span className="text-gradient">{t.hero.titleB}</span>
                 </h1>
@@ -579,23 +643,13 @@ export default function App() {
                 <h2 className="mt-2 text-balance text-2xl font-semibold tracking-tight sm:text-3xl text-gradient-soft">
                   {t.portfolio.title}
                 </h2>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-white/70">
-                  {t.portfolio.subtitle}
-                </p>
 
-                <div className="mt-8 grid gap-12 p-2 md:grid-cols-2">
-                  {projects.map((project, index) => (
-                    <ProjectPerspectiveCard
-                      key={project.title}
-                      title={project.title}
-                      category={project.category}
-                      href={project.href}
-                      previewImage={project.previewImage}
-                      mobilePreviewImage={project.mobilePreviewImage}
-                      description={project.description}
-                      delay={index * 0.08}
-                    />
-                  ))}
+                <div className="mt-8 px-1 pb-2 pt-1 sm:px-4">
+                  <PortfolioCarousel
+                    projects={projects}
+                    visitLabel={t.portfolio.visitCta}
+                    lang={lang}
+                  />
                 </div>
 
                 <div className="mt-6">

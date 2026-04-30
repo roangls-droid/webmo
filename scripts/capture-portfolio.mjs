@@ -11,6 +11,9 @@ const outDir = path.join(root, "src", "assets", "portfolio");
 const targets = [
   { url: "https://www.remidental.com/", file: "remidental.jpg", mobileFile: "remidental-mobile.jpg" },
   { url: "https://ailien-site.vercel.app/", file: "ailien.jpg", mobileFile: "ailien-mobile.jpg" },
+  { url: "https://smel-psi.vercel.app/", file: "smel.jpg", mobileFile: "smel-mobile.jpg" },
+  { url: "https://thejadecosmetics.com/", file: "jade.jpg", mobileFile: "jade-mobile.jpg" },
+  { url: "https://dada.be/", file: "dada.jpg", mobileFile: "dada-mobile.jpg" },
 ];
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));

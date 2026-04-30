@@ -9,6 +9,8 @@ type Props = {
   mobilePreviewImage?: string;
   description: string;
   delay?: number;
+  /** Libellé du CTA au survol (desktop). */
+  visitLabel?: string;
 };
 
 export function ProjectPerspectiveCard({
@@ -19,6 +21,7 @@ export function ProjectPerspectiveCard({
   mobilePreviewImage,
   description,
   delay = 0,
+  visitLabel = "Visiter le site",
 }: Props) {
   return (
     <motion.a
@@ -47,7 +50,7 @@ export function ProjectPerspectiveCard({
           }}
           style={{ transformPerspective: 1200 }}
         >
-          <div className="mx-auto w-[210px] rounded-[1.8rem] border border-white/15 bg-[#0b1220] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
+          <div className="mx-auto w-full max-w-[210px] rounded-[1.8rem] border border-white/15 bg-[#0b1220] p-2 shadow-[0_16px_40px_rgba(0,0,0,0.45)]">
             <div className="relative overflow-hidden rounded-[1.2rem] border border-white/10">
               <img
                 src={mobilePreviewImage ?? previewImage}
@@ -78,7 +81,7 @@ export function ProjectPerspectiveCard({
 
         <div className="absolute bottom-5 right-5 hidden translate-y-1 scale-95 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 md:block">
           <span className="inline-flex items-center gap-1 rounded-xl border border-white/20 bg-[#0f172a]/80 px-3 py-1.5 text-xs font-semibold text-white">
-            Visiter le site <ArrowRight className="h-3.5 w-3.5" />
+            {visitLabel} <ArrowRight className="h-3.5 w-3.5" />
           </span>
         </div>
       </div>

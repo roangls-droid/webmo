@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:clean": "rm -rf node_modules/.vite dist && vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "capture:portfolio": "node scripts/capture-portfolio.mjs"
